@@ -1,0 +1,1179 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>第一课 · 周末你有什么打算 | 汉语学习</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Poppins', 'Roboto', 'Noto Sans SC', system-ui, -apple-system, sans-serif;
+            background: #f5f7fa;
+            color: #2c3e2f;
+            line-height: 1.5;
+            scroll-behavior: smooth;
+        }
+
+        .app-container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 1.5rem;
+        }
+
+        /* 头部 */
+        header {
+            background: linear-gradient(135deg, #2c5e3a 0%, #3e7e4a 100%);
+            border-radius: 2rem;
+            padding: 1.8rem 2rem;
+            margin-bottom: 2rem;
+            color: white;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .title-area h1 {
+            font-size: 2.2rem;
+            letter-spacing: -0.5px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .title-area h1 .lesson-icon {
+            background: #f9b43a;
+            padding: 0.3rem 1.2rem;
+            border-radius: 60px;
+            font-size: 1.4rem;
+            color: #2c3e2f;
+        }
+
+        .title-area .sub {
+            margin-top: 0.6rem;
+            opacity: 0.9;
+            font-size: 1rem;
+        }
+
+        /* 导航 tabs */
+        .nav-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid #e2e6e9;
+            padding-bottom: 0.6rem;
+        }
+
+        .tab-btn {
+            background: transparent;
+            border: none;
+            font-size: 1.15rem;
+            font-weight: 600;
+            padding: 0.6rem 1.5rem;
+            border-radius: 2rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: #5a6e55;
+        }
+
+        .tab-btn.active {
+            background: #3e7e4a;
+            color: white;
+            box-shadow: 0 4px 10px rgba(62,126,74,0.3);
+        }
+
+        .tab-btn:hover:not(.active) {
+            background: #e8ede3;
+            color: #2c5e3a;
+        }
+
+        .page {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .active-page {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px);}
+            to { opacity: 1; transform: translateY(0);}
+        }
+
+        .card {
+            background: white;
+            border-radius: 1.8rem;
+            padding: 1.8rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.04);
+            border: 1px solid #e9ece5;
+        }
+
+        .section-title {
+            font-size: 1.6rem;
+            border-left: 6px solid #f4b942;
+            padding-left: 1rem;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+            color: #2c5e3a;
+        }
+
+        /* 生词网格 */
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1rem;
+        }
+
+        .vocab-item {
+            background: #fefaf2;
+            border-radius: 1.2rem;
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+            border: 1px solid #ffe6c2;
+            transition: all 0.2s;
+        }
+
+        /* 图片区域 - 并排显示 */
+        .image-pair {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            width: 100%;
+        }
+        .image-pair .word-image-placeholder {
+            flex: 1;
+            min-height: 100px;
+            background: #f0f4ea;
+            border-radius: 0.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #8f9b82;
+            font-size: 0.85rem;
+            border: 1px dashed #c5d5b5;
+            overflow: hidden;
+        }
+        .single-image {
+            width: 100%;
+            min-height: 100px;
+            background: #f0f4ea;
+            border-radius: 0.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #8f9b82;
+            font-size: 0.85rem;
+            border: 1px dashed #c5d5b5;
+            overflow: hidden;
+        }
+        .image-pair img, .single-image img {
+            max-width: 100%;
+            max-height: 120px;
+            object-fit: contain;
+            border-radius: 0.5rem;
+        }
+
+        .word-info {
+            flex: 1;
+        }
+        .word-chinese {
+            font-size: 1.4rem;
+            font-weight: bold;
+            font-family: 'Noto Sans SC', sans-serif;
+        }
+        .word-pinyin {
+            color: #b4622a;
+            font-size: 0.8rem;
+        }
+        .word-meaning {
+            background: #eef3e9;
+            padding: 0.2rem 0.8rem;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            color: #4a6741;
+            display: inline-block;
+        }
+
+        .audio-btn {
+            background: #3e7e4a;
+            border: none;
+            color: white;
+            font-size: 1.1rem;
+            padding: 0.4rem 1rem;
+            border-radius: 2rem;
+            cursor: pointer;
+            transition: 0.1s;
+        }
+
+        /* 对话区域 */
+        .dialog-section {
+            margin-bottom: 2rem;
+            background: #fef9ef;
+            border-radius: 1.5rem;
+            padding: 1.2rem;
+            border: 1px solid #f5e5cf;
+        }
+        .dialog-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #b45f2a;
+            margin-bottom: 1rem;
+            padding-left: 0.5rem;
+            border-left: 4px solid #f4b942;
+            background: #fff1e0;
+            display: inline-block;
+            padding: 0.3rem 1rem;
+            border-radius: 2rem;
+        }
+        .dialog-line {
+            display: flex;
+            margin-bottom: 1rem;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+            align-items: flex-start;
+        }
+        .speaker {
+            font-weight: bold;
+            min-width: 70px;
+            background: #ffe0b5;
+            padding: 0.3rem 1rem;
+            border-radius: 2rem;
+            text-align: center;
+            font-size: 0.9rem;
+            align-self: center;
+        }
+        .dialog-text {
+            flex: 1;
+        }
+        .text-ch {
+            font-size: 1.1rem;
+            font-weight: 500;
+            margin-bottom: 0.2rem;
+        }
+        .text-py {
+            font-size: 0.75rem;
+            color: #aa7942;
+            margin-bottom: 0.2rem;
+        }
+        .dialog-audio-btn {
+            background: #3e7e4a;
+            border: none;
+            color: white;
+            font-size: 0.8rem;
+            padding: 0.2rem 0.7rem;
+            border-radius: 1.5rem;
+            cursor: pointer;
+            margin-top: 0.2rem;
+            display: inline-block;
+        }
+        .dialog-audio-btn:hover {
+            background: #2c5e3a;
+        }
+
+        /* 显示模式切换按钮组 */
+        .mode-switch-bar {
+            background: #f4f0e3;
+            border-radius: 2rem;
+            padding: 0.5rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            gap: 0.8rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .mode-btn {
+            background: #e0d6c0;
+            border: none;
+            padding: 0.5rem 1.2rem;
+            border-radius: 2rem;
+            font-size: 0.9rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+            color: #5a6e55;
+        }
+        .mode-btn.active-mode {
+            background: #3e7e4a;
+            color: white;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+        .mode-btn:hover:not(.active-mode) {
+            background: #cdc9b2;
+        }
+
+        /* 场景配图样式 */
+        .scene-img {
+            display: block;
+            width: 100%;
+            max-width: 550px;
+            height: auto;
+            margin: 1rem auto 0.5rem auto;
+            border-radius: 1rem;
+            box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+            cursor: pointer;
+            transition: transform 0.2s;
+            background: #faf5e8;
+        }
+        .scene-img:hover {
+            transform: scale(1.01);
+        }
+        .img-caption-under {
+            text-align: center;
+            font-size: 0.85rem;
+            color: #8f9b82;
+            margin-top: 0.4rem;
+            font-style: italic;
+        }
+
+        /* 视频容器 - 适配B站iframe */
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            border-radius: 1.5rem;
+            overflow: hidden;
+            background: #2b3b2a;
+            margin-bottom: 0.5rem;
+        }
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 1.5rem;
+            border: none;
+        }
+        .video-card {
+            margin-bottom: 2rem;
+            background: #fef9ef;
+            border-radius: 1.5rem;
+            padding: 1.2rem;
+            border: 1px solid #f5e5cf;
+        }
+        .video-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #b45f2a;
+            margin-bottom: 1rem;
+            padding-left: 0.5rem;
+            border-left: 4px solid #f4b942;
+            background: #fff1e0;
+            display: inline-block;
+            padding: 0.3rem 1rem;
+            border-radius: 2rem;
+        }
+
+        /* 贪吃蛇游戏样式 (嵌入在闯关挑战板块内) */
+        .snake-game-embed {
+            margin-top: 1rem;
+            background: #9ac9db;
+            border-radius: 2rem;
+            padding: 1rem;
+            border: 4px solid #feffcd;
+        }
+        .snake-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #feffcd;
+            padding: 10px 20px;
+            border-radius: 60px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .snake-score {
+            background: white;
+            border-radius: 40px;
+            padding: 5px 20px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #1e6f8f;
+            border: 2px solid #f3b33d;
+        }
+        .snake-controls {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .snake-btn {
+            background: #fde156;
+            border: none;
+            font-size: 16px;
+            font-weight: bold;
+            padding: 6px 16px;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 0 #c59d2b;
+            transition: 0.05s ease;
+        }
+        .snake-btn:active {
+            transform: translateY(3px);
+            box-shadow: 0 1px 0 #c59d2b;
+        }
+        .snake-canvas-box {
+            background: #a4d5ee;
+            border-radius: 50px;
+            padding: 15px;
+            text-align: center;
+        }
+        canvas {
+            display: block;
+            width: 100%;
+            max-width: 800px;
+            height: auto;
+            background: #c8e9fc;
+            border-radius: 30px;
+            margin: 0 auto;
+            cursor: pointer;
+        }
+        .word-grid-snake {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        .word-tile-snake {
+            background: #fefcd0;
+            border: 3px solid #ffb284;
+            border-radius: 30px;
+            padding: 8px 16px;
+            font-size: 18px;
+            font-weight: 600;
+            color: #215c77;
+            white-space: nowrap;
+        }
+        .snake-hint {
+            font-size: 16px;
+            color: #215c77;
+            margin-top: 12px;
+            text-align: center;
+            background: #fefcd0;
+            padding: 6px;
+            border-radius: 40px;
+        }
+        @media (max-width: 680px) {
+            .word-tile-snake { font-size: 14px; padding: 4px 10px; }
+            .snake-score { font-size: 14px; padding: 3px 12px; }
+        }
+
+        /* 学习资源模块样式 */
+        .resources-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        .resource-card {
+            background: #fefaf2;
+            border-radius: 1.2rem;
+            padding: 1rem;
+            border: 1px solid #ffe6c2;
+            transition: all 0.2s;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .resource-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            background: #fff5e6;
+        }
+        .resource-icon {
+            font-size: 2rem;
+        }
+        .resource-info h3 {
+            font-size: 1.1rem;
+            color: #2c5e3a;
+            margin-bottom: 0.2rem;
+        }
+        .resource-info p {
+            font-size: 0.85rem;
+            color: #8f9b82;
+        }
+
+        /* 语法知识模块样式 */
+        .grammar-card {
+            background: #fef9ef;
+            border-radius: 1.5rem;
+            padding: 1.2rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid #f5e5cf;
+        }
+        .grammar-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #b45f2a;
+            margin-bottom: 1rem;
+            padding-left: 0.5rem;
+            border-left: 4px solid #f4b942;
+            background: #fff1e0;
+            display: inline-block;
+            padding: 0.3rem 1rem;
+            border-radius: 2rem;
+        }
+        .grammar-example {
+            background: #f4f0e3;
+            padding: 0.8rem;
+            border-radius: 1rem;
+            margin: 0.8rem 0;
+            font-family: monospace;
+        }
+        .grammar-note {
+            color: #6b8c5c;
+            font-style: italic;
+            margin-top: 0.5rem;
+        }
+
+        /* 练习区 */
+        .quiz-area {
+            background: #f3f8ef;
+            border-radius: 1.5rem;
+            padding: 1.2rem;
+        }
+        .quiz-question {
+            font-weight: bold;
+            margin: 1rem 0 0.8rem 0;
+            font-size: 1.05rem;
+        }
+        .quiz-options {
+            display: flex;
+            flex-direction: column;
+            gap: 0.7rem;
+            margin-bottom: 0.8rem;
+        }
+        .quiz-option {
+            background: white;
+            padding: 0.7rem 1rem;
+            border-radius: 1.2rem;
+            cursor: pointer;
+            border: 1px solid #cfdec4;
+            transition: 0.1s;
+        }
+        .quiz-option:hover {
+            background: #f1f7ea;
+        }
+        .quiz-feedback {
+            margin-top: 0.5rem;
+            font-weight: 500;
+            padding-left: 0.5rem;
+        }
+        .grammar-practice {
+            background: #f3f8ef;
+            border-radius: 1.5rem;
+            padding: 1.2rem;
+            margin-top: 1rem;
+        }
+        .practice-item {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px dashed #cfdec4;
+        }
+        .practice-question {
+            font-weight: bold;
+            margin-bottom: 0.8rem;
+        }
+        .practice-input {
+            width: 100%;
+            padding: 0.6rem;
+            border-radius: 1rem;
+            border: 1px solid #cfdec4;
+            font-family: inherit;
+            margin-top: 0.5rem;
+        }
+        .practice-btn {
+            background: #3e7e4a;
+            color: white;
+            border: none;
+            padding: 0.4rem 1rem;
+            border-radius: 2rem;
+            cursor: pointer;
+            margin-top: 0.5rem;
+        }
+        .practice-feedback {
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+            color: #6b8c5c;
+        }
+        footer {
+            text-align: center;
+            margin-top: 2.5rem;
+            padding: 1.2rem;
+            font-size: 0.8rem;
+            color: #8f9b82;
+            border-top: 1px solid #e2e2d6;
+        }
+        button {
+            background: none;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+<div class="app-container">
+    <header>
+        <div class="title-area">
+            <h1>
+                <span class="lesson-icon">📖 第一课</span>
+                <span>周末你有什么打算</span>
+            </h1>
+            <div class="sub">⭐ 课文主题 · 谈论周末计划、学习与旅游 | HSK 3 核心句型</div>
+        </div>
+    </header>
+
+    <!-- 导航栏：六个板块 -->
+    <div class="nav-tabs">
+        <button class="tab-btn active" data-page="page-dialog">📖 课文对话</button>
+        <button class="tab-btn" data-page="page-vocab">🔤 核心词汇</button>
+        <button class="tab-btn" data-page="page-media">🎬 情景视频</button>
+        <button class="tab-btn" data-page="page-grammar">📚 语法知识</button>
+        <button class="tab-btn" data-page="page-exercise">✍️ 课堂练习</button>
+        <button class="tab-btn" data-page="page-challenge">🎮 闯关挑战</button>
+        <button class="tab-btn" data-page="page-resources">🌐 学习资源</button>
+    </div>
+
+    <!-- 页面1：课文对话（四段）-->
+    <div id="page-dialog" class="page active-page">
+        <div class="card">
+            <div class="section-title">💬 课文对话 · 周末计划与日常 <span style="font-size:0.9rem;">(🔊 点击句子旁喇叭按钮可单独朗读)</span></div>
+            <div class="mode-switch-bar">
+                <button class="mode-btn active-mode" data-mode="all">📖 全部显示</button>
+                <button class="mode-btn" data-mode="chinese">🔤 仅中文</button>
+                <button class="mode-btn" data-mode="pinyin">🎵 仅拼音</button>
+                <button class="mode-btn" data-mode="hidden">❓ 全部隐藏（背诵模式）</button>
+            </div>
+            <!-- 对话一 -->
+            <div class="dialog-section" data-dialog="1">
+                <div class="dialog-title">📌 一、谈周末的打算</div>
+                <div class="dialog-line"><div class="speaker">小丽:</div><div class="dialog-text"><div class="text-ch" data-ch="周末你有什么打算？">周末你有什么打算？</div><div class="text-py" data-py="Zhōumò nǐ yǒu shénme dǎsuàn?">Zhōumò nǐ yǒu shénme dǎsuàn?</div><button class="dialog-audio-btn" data-text="周末你有什么打算">🔊 朗读</button></div></div>
+                <div class="dialog-line"><div class="speaker">小刚:</div><div class="dialog-text"><div class="text-ch" data-ch="我早就想好了，请你吃饭、看电影、喝咖啡。">我早就想好了，请你吃饭、看电影、喝咖啡。</div><div class="text-py" data-py="Wǒ zǎo jiù xiǎng hǎo le, qǐng nǐ chīfàn, kàn diànyǐng, hē kāfēi.">Wǒ zǎo jiù xiǎng hǎo le, qǐng nǐ chīfàn, kàn diànyǐng, hē kāfēi.</div><button class="dialog-audio-btn" data-text="我早就想好了，请你吃饭、看电影、喝咖啡">🔊 朗读</button></div></div>
+                <div class="dialog-line"><div class="speaker">小丽:</div><div class="dialog-text"><div class="text-ch" data-ch="请我？">请我？</div><div class="text-py" data-py="Qǐng wǒ?">Qǐng wǒ?</div><button class="dialog-audio-btn" data-text="请我">🔊 朗读</button></div></div>
+                <div class="dialog-line"><div class="speaker">小刚:</div><div class="dialog-text"><div class="text-ch" data-ch="是啊，我已经找好饭馆了，电影票也买好了。">是啊，我已经找好饭馆了，电影票也买好了。</div><div class="text-py" data-py="Shì a, wǒ yǐjīng zhǎo hǎo fànguǎn le, diànyǐng piào yě mǎi hǎo le.">Shì a, wǒ yǐjīng zhǎo hǎo fànguǎn le, diànyǐng piào yě mǎi hǎo le.</div><button class="dialog-audio-btn" data-text="是啊，我已经找好饭馆了，电影票也买好了">🔊 朗读</button></div></div>
+                <div class="dialog-line"><div class="speaker">小丽:</div><div class="dialog-text"><div class="text-ch" data-ch="我还没想好要不要跟你去呢。">我还没想好要不要跟你去呢。</div><div class="text-py" data-py="Wǒ hái méi xiǎng hǎo yào bù yào gēn nǐ qù ne.">Wǒ hái méi xiǎng hǎo yào bù yào gēn nǐ qù ne.</div><button class="dialog-audio-btn" data-text="我还没想好要不要跟你去呢">🔊 朗读</button></div></div>
+                <img class="scene-img" src="https://p3-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/6f6c5c96784e43e698fa5b6264a6187a.jpeg~tplv-a9rns2rl98-image.png?lk3s=8e244e95&rcl=20260415104051BC6AF0AB85A931BBBCEF&rrcfp=dafada99&x-expires=2092444851&x-signature=%2BTs%2Bd%2BLNkvh2kbS4kqaxlnAa670%3D" alt="周末邀约" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 550 350\'%3E%3Crect width=\'550\' height=\'350\' fill=\'%23e8f0e3\'/%3E%3Ctext x=\'275\' y=\'175\' text-anchor=\'middle\' fill=\'%23668855\' font-size=\'20\'%3E🎨 周末邀约%3C/text%3E%3C/svg%3E';">
+                <div class="img-caption-under">🎨 周末打算做什么？请你吃饭、看电影、喝咖啡呀！</div>
+            </div>
+            <!-- 对话二 -->
+            <div class="dialog-section" data-dialog="2">
+                <div class="dialog-title">📌 二、在家</div>
+                <div class="dialog-line"><div class="speaker">妈妈:</div><div class="dialog-text"><div class="text-ch" data-ch="你一直玩儿电脑游戏，作业写完了吗？">你一直玩儿电脑游戏，作业写完了吗？</div><div class="text-py" data-py="Nǐ yīzhí wánr diànnǎo yóuxì, zuòyè xiě wán le ma?">Nǐ yīzhí wánr diànnǎo yóuxì, zuòyè xiě wán le ma?</div><button class="dialog-audio-btn" data-text="你一直玩儿电脑游戏，作业写完了吗">🔊 朗读</button></div></div>
+                <div class="dialog-line"><div class="speaker">儿子:</div><div class="dialog-text"><div class="text-ch" data-ch="都写完了。">都写完了。</div><div class="text-py" data-py="Dōu xiě wán le.">Dōu xiě wán le.</div><button class="dialog-audio-btn" data-text="都写完了">🔊 朗读</button></div></div>
+                <div class="dialog-line"><div class="speaker">妈妈:</div><div class="dialog-text"><div class="text-ch" data-ch="明天不是有考试吗？你怎么一点儿也不着急？">明天不是有考试吗？你怎么一点儿也不着急？</div><div class="text-py" data-py="Míngtiān bùshì yǒu kǎoshì ma? Nǐ zěnme yīdiǎnr yě bù zhāojí?">Míngtiān bùshì yǒu kǎoshì ma? Nǐ zěnme yīdiǎnr yě bù zhāojí?</div><button class="dialog-audio-btn" data-text="明天不是有考试吗？你怎么一点儿也不着急">🔊 朗读</button></div></div>
+                <div class="dialog-line"><div class="speaker">儿子:</div><div class="dialog-text"><div class="text-ch" data-ch="我早就复习好了。">我早就复习好了。</div><div class="text-py" data-py="Wǒ zǎo jiù fùxí hǎo le.">Wǒ zǎo jiù fùxí hǎo le.</div><button class="dialog-audio-btn" data-text="我早就复习好了">🔊 朗读</button></div></div>
+                <div class="dialog-line"><div class="speaker">妈妈:</div><div class="dialog-text"><div class="text-ch" data-ch="那也不能一直玩儿啊。">那也不能一直玩儿啊。</div><div class="text-py" data-py="Nà yě bùnéng yīzhí wánr a.">Nà yě bùnéng yīzhí wánr a.</div><button class="dialog-audio-btn" data-text="那也不能一直玩儿啊">🔊 朗读</button></div></div>
+                <img class="scene-img" src="https://p6-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/87493d1bdb2443a182496edc0edbb4e2.jpeg~tplv-a9rns2rl98-image.png?lk3s=8e244e95&rcl=20260415104051BC6AF0AB85A931BBBCEF&rrcfp=dafada99&x-expires=2092444851&x-signature=oeqiwY9WNZ4JHzi1YkjzkYzIg7w%3D" alt="母子对话" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 550 350\'%3E%3Crect width=\'550\' height=\'350\' fill=\'%23ffe0b5\'/%3E%3Ctext x=\'275\' y=\'175\' text-anchor=\'middle\' fill=\'%23b45f2a\' font-size=\'20\'%3E🎮 母子对话%3C/text%3E%3C/svg%3E';">
+                <div class="img-caption-under">🎨 你怎么一直玩电脑游戏？作业写完了，也复习完毕了</div>
+            </div>
+            <!-- 对话三 -->
+            <div class="dialog-section" data-dialog="3">
+                <div class="dialog-title">📌 三、聊旅游计划</div>
+                <div class="dialog-line"><div class="speaker">小丽:</div><div class="dialog-text"><div class="text-ch" data-ch="下个月我去旅游，你能跟我一起去吗？">下个月我去旅游，你能跟我一起去吗？</div><div class="text-py" data-py="Xià gè yuè wǒ qù lǚyóu, nǐ néng gēn wǒ yīqǐ qù ma?">Xià gè yuè wǒ qù lǚyóu, nǐ néng gēn wǒ yīqǐ qù ma?</div><button class="dialog-audio-btn" data-text="下个月我去旅游，你能跟我一起去吗">🔊 朗读</button></div></div>
+                <div class="dialog-line"><div class="speaker">小刚:</div><div class="dialog-text"><div class="text-ch" data-ch="我还没想好呢。你觉得哪儿最好玩儿？">我还没想好呢。你觉得哪儿最好玩儿？</div><div class="text-py" data-py="Wǒ hái méi xiǎng hǎo ne. Nǐ juéde nǎr zuì hǎowánr?">Wǒ hái méi xiǎng hǎo ne. Nǐ juéde nǎr zuì hǎowánr?</div><button class="dialog-audio-btn" data-text="我还没想好呢。你觉得哪儿最好玩儿">🔊 朗读</button></div></div>
+                <div class="dialog-line"><div class="speaker">小丽:</div><div class="dialog-text"><div class="text-ch" data-ch="南方啊，我们去年就是这个时候去的。">南方啊，我们去年就是这个时候去的。</div><div class="text-py" data-py="Nánfāng a, wǒmen qùnián jiùshì zhège shíhou qù de.">Nánfāng a, wǒmen qùnián jiùshì zhège shíhou qù de.</div><button class="dialog-audio-btn" data-text="南方啊，我们去年就是这个时候去的">🔊 朗读</button></div></div>
+                <div class="dialog-line"><div class="speaker">小刚:</div><div class="dialog-text"><div class="text-ch" data-ch="南方太热了，北方好一些，不冷也不热。">南方太热了，北方好一些，不冷也不热。</div><div class="text-py" data-py="Nánfāng tài rè le, běifāng hǎo yīxiē, bù lěng yě bù rè.">Nánfāng tài rè le, běifāng hǎo yīxiē, bù lěng yě bù rè.</div><button class="dialog-audio-btn" data-text="南方太热了，北方好一些，不冷也不热">🔊 朗读</button></div></div>
+                <img class="scene-img" src="https://p3-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/477e127f5a6549f498b30816444f7a6f.jpeg~tplv-a9rns2rl98-image.png?lk3s=8e244e95&rcl=20260415104051BC6AF0AB85A931BBBCEF&rrcfp=dafada99&x-expires=2092444851&x-signature=TFqBCUFcGHtQlvZs8Y2mdaK5QnM%3D" alt="旅游计划" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 550 350\'%3E%3Crect width=\'550\' height=\'350\' fill=\'%23c7e2f0\'/%3E%3Ctext x=\'275\' y=\'175\' text-anchor=\'middle\' fill=\'%23333333\' font-size=\'20\'%3E🗺️ 旅游计划%3C/text%3E%3C/svg%3E';">
+                <div class="img-caption-under">🎨 下个月一起去旅游吧，南方和北方哪里更好玩呢？</div>
+            </div>
+            <!-- 对话四 -->
+            <div class="dialog-section" data-dialog="4">
+                <div class="dialog-title">📌 四、准备去旅游</div>
+                <div class="dialog-line"><div class="speaker">小刚:</div><div class="dialog-text"><div class="text-ch" data-ch="水果、面包、茶都准备好了，我们还带什么？">水果、面包、茶都准备好了，我们还带什么？</div><div class="text-py" data-py="Shuǐguǒ, miànbāo, chá dōu zhǔnbèi hǎo le, wǒmen hái dài shénme?">Shuǐguǒ, miànbāo, chá dōu zhǔnbèi hǎo le, wǒmen hái dài shénme?</div><button class="dialog-audio-btn" data-text="水果、面包、茶都准备好了，我们还带什么">🔊 朗读</button></div></div>
+                <div class="dialog-line"><div class="speaker">小丽:</div><div class="dialog-text"><div class="text-ch" data-ch="手机、电脑、地图，一个也不能少。">手机、电脑、地图，一个也不能少。</div><div class="text-py" data-py="Shǒujī, diànnǎo, dìtú, yīgè yě bùnéng shǎo.">Shǒujī, diànnǎo, dìtú, yīgè yě bùnéng shǎo.</div><button class="dialog-audio-btn" data-text="手机、电脑、地图，一个也不能少">🔊 朗读</button></div></div>
+                <div class="dialog-line"><div class="speaker">小刚:</div><div class="dialog-text"><div class="text-ch" data-ch="这些我昨天下午就准备好了。">这些我昨天下午就准备好了。</div><div class="text-py" data-py="Zhèxiē wǒ zuótiān xiàwǔ jiù zhǔnbèi hǎo le.">Zhèxiē wǒ zuótiān xiàwǔ jiù zhǔnbèi hǎo le.</div><button class="dialog-audio-btn" data-text="这些我昨天下午就准备好了">🔊 朗读</button></div></div>
+                <div class="dialog-line"><div class="speaker">小丽:</div><div class="dialog-text"><div class="text-ch" data-ch="再多带几件衣服吧。">再多带几件衣服吧。</div><div class="text-py" data-py="Zài duō dài jǐ jiàn yīfú ba.">Zài duō dài jǐ jiàn yīfú ba.</div><button class="dialog-audio-btn" data-text="再多带几件衣服吧">🔊 朗读</button></div></div>
+                <div class="dialog-line"><div class="speaker">小刚:</div><div class="dialog-text"><div class="text-ch" data-ch="我们是去旅游，不是搬家，还是少带一些吧。">我们是去旅游，不是搬家，还是少带一些吧。</div><div class="text-py" data-py="Wǒmen shì qù lǚyóu, bùshì bānjiā, háishì shǎo dài yīxiē ba.">Wǒmen shì qù lǚyóu, bùshì bānjiā, háishì shǎo dài yīxiē ba.</div><button class="dialog-audio-btn" data-text="我们是去旅游，不是搬家，还是少带一些吧">🔊 朗读</button></div></div>
+                <div style="background:#f7f2e4; border-radius:1rem; padding:0.6rem; margin-top:0.8rem; text-align:center;"><span style="font-size:0.85rem;">🧳 行李准备小贴士：轻便出行，开心旅游！</span></div>
+            </div>
+            <button id="playFullDialogAudio" style="background:#3e7e4a; color:white; padding:0.5rem 1.2rem; border-radius:2rem; margin-top:0.5rem; cursor:pointer;">🔊 播放课文精选对话（连续）</button>
+        </div>
+    </div>
+
+    <!-- 页面2：核心词汇（已插入所有笔顺图片）-->
+    <div id="page-vocab" class="page">
+        <div class="card">
+            <div class="section-title">🔊 核心词汇 · Vocabulario clave</div>
+            <div class="vocab-grid" id="vocab-list">
+                <!-- 周末 -->
+                <div class="vocab-item">
+                    <div class="image-pair">
+                        <div class="word-image-placeholder"><img src="https://static.zuciku.com/images/bihu/zck/psh127.gif" alt="周末笔顺1" style="max-width:100%; max-height:120px; border-radius:0.5rem;" onerror="this.onerror=null; this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'%3E%3Crect width=\'100\' height=\'100\' fill=\'%23f0f4ea\'/%3E%3Ctext x=\'50\' y=\'50\' text-anchor=\'middle\' fill=\'%23668855\' font-size=\'12\'%3E📷 周%3C/text%3E%3C/svg%3E';"></div>
+                        <div class="word-image-placeholder"><img src="https://static.zuciku.com/images/bihu/zck/7p8bf0.gif" alt="周末笔顺2" style="max-width:100%; max-height:120px; border-radius:0.5rem;" onerror="this.onerror=null; this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'%3E%3Crect width=\'100\' height=\'100\' fill=\'%23f0f4ea\'/%3E%3Ctext x=\'50\' y=\'50\' text-anchor=\'middle\' fill=\'%23668855\' font-size=\'12\'%3E📷 末%3C/text%3E%3C/svg%3E';"></div>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; width: 100%; align-items: center;">
+                        <div class="word-info"><div class="word-chinese">周末</div><div class="word-pinyin">zhōumò</div><div class="word-meaning">fin de semana</div></div>
+                        <button class="audio-btn" data-word="周末">🔊 发音</button>
+                    </div>
+                </div>
+                <!-- 打算 -->
+                <div class="vocab-item">
+                    <div class="image-pair">
+                        <div class="word-image-placeholder"><img src="https://static.zuciku.com/images/bihu/zck/u7jp8d.gif" alt="打笔顺" style="max-width:100%; max-height:120px; border-radius:0.5rem;" onerror="this.onerror=null; this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'%3E%3Crect width=\'100\' height=\'100\' fill=\'%23f0f4ea\'/%3E%3Ctext x=\'50\' y=\'50\' text-anchor=\'middle\' fill=\'%23668855\' font-size=\'12\'%3E📷 打%3C/text%3E%3C/svg%3E';"></div>
+                        <div class="word-image-placeholder"><img src="https://static.zuciku.com/images/bihu/zck/ump5r7.gif" alt="算笔顺" style="max-width:100%; max-height:120px; border-radius:0.5rem;" onerror="this.onerror=null; this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'%3E%3Crect width=\'100\' height=\'100\' fill=\'%23f0f4ea\'/%3E%3Ctext x=\'50\' y=\'50\' text-anchor=\'middle\' fill=\'%23668855\' font-size=\'12\'%3E📷 算%3C/text%3E%3C/svg%3E';"></div>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; width: 100%; align-items: center;">
+                        <div class="word-info"><div class="word-chinese">打算</div><div class="word-pinyin">dǎsuàn</div><div class="word-meaning">planear</div></div>
+                        <button class="audio-btn" data-word="打算">🔊 发音</button>
+                    </div>
+                </div>
+                <!-- 啊 -->
+                <div class="vocab-item">
+                    <div class="single-image"><img src="https://static.zuciku.com/images/bihu/zck/dtg4hf.gif" alt="啊笔顺" style="max-width:100%; max-height:120px; border-radius:0.5rem;" onerror="this.onerror=null; this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'%3E%3Crect width=\'100\' height=\'100\' fill=\'%23f0f4ea\'/%3E%3Ctext x=\'50\' y=\'50\' text-anchor=\'middle\' fill=\'%23668855\' font-size=\'12\'%3E📷 啊%3C/text%3E%3C/svg%3E';"></div>
+                    <div style="display: flex; justify-content: space-between; width: 100%; align-items: center;">
+                        <div class="word-info"><div class="word-chinese">啊</div><div class="word-pinyin">a</div><div class="word-meaning">partícula</div></div>
+                        <button class="audio-btn" data-word="啊">🔊 发音</button>
+                    </div>
+                </div>
+                <!-- 跟 -->
+                <div class="vocab-item">
+                    <div class="single-image"><img src="https://static.zuciku.com/images/bihu/zck/d0b9rs.gif" alt="跟笔顺" style="max-width:100%; max-height:120px; border-radius:0.5rem;" onerror="this.onerror=null; this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'%3E%3Crect width=\'100\' height=\'100\' fill=\'%23f0f4ea\'/%3E%3Ctext x=\'50\' y=\'50\' text-anchor=\'middle\' fill=\'%23668855\' font-size=\'12\'%3E📷 跟%3C/text%3E%3C/svg%3E';"></div>
+                    <div style="display: flex; justify-content: space-between; width: 100%; align-items: center;">
+                        <div class="word-info"><div class="word-chinese">跟</div><div class="word-pinyin">gēn</div><div class="word-meaning">con / seguir</div></div>
+                        <button class="audio-btn" data-word="跟">🔊 发音</button>
+                    </div>
+                </div>
+                <!-- 一直 -->
+                <div class="vocab-item">
+                    <div class="image-pair">
+                        <div class="word-image-placeholder"><img src="https://static.zuciku.com/images/bihu/zck/zoj1dy.gif" alt="一笔顺" style="max-width:100%; max-height:120px; border-radius:0.5rem;" onerror="this.onerror=null; this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'%3E%3Crect width=\'100\' height=\'100\' fill=\'%23f0f4ea\'/%3E%3Ctext x=\'50\' y=\'50\' text-anchor=\'middle\' fill=\'%23668855\' font-size=\'12\'%3E📷 一%3C/text%3E%3C/svg%3E';"></div>
+                        <div class="word-image-placeholder"><img src="https://static.zuciku.com/images/bihu/zck/qfrtl9.gif" alt="直笔顺" style="max-width:100%; max-height:120px; border-radius:0.5rem;" onerror="this.onerror=null; this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'%3E%3Crect width=\'100\' height=\'100\' fill=\'%23f0f4ea\'/%3E%3Ctext x=\'50\' y=\'50\' text-anchor=\'middle\' fill=\'%23668855\' font-size=\'12\'%3E📷 直%3C/text%3E%3C/svg%3E';"></div>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; width: 100%; align-items: center;">
+                        <div class="word-info"><div class="word-chinese">一直</div><div class="word-pinyin">yīzhí</div><div class="word-meaning">siempre</div></div>
+                        <button class="audio-btn" data-word="一直">🔊 发音</button>
+                    </div>
+                </div>
+                <!-- 游戏 -->
+                <div class="vocab-item">
+                    <div class="image-pair">
+                        <div class="word-image-placeholder"><img src="https://static.zuciku.com/images/bihu/zck/cy114k.gif" alt="游笔顺" style="max-width:100%; max-height:120px; border-radius:0.5rem;" onerror="this.onerror=null; this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'%3E%3Crect width=\'100\' height=\'100\' fill=\'%23f0f4ea\'/%3E%3Ctext x=\'50\' y=\'50\' text-anchor=\'middle\' fill=\'%23668855\' font-size=\'12\'%3E📷 游%3C/text%3E%3C/svg%3E';"></div>
+                        <div class="word-image-placeholder"><img src="https://static.zuciku.com/images/bihu/zck/jsyh75.gif" alt="戏笔顺" style="max-width:100%; max-height:120px; border-radius:0.5rem;" onerror="this.onerror=null; this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'%3E%3Crect width=\'100\' height=\'100\' fill=\'%23f0f4ea\'/%3E%3Ctext x=\'50\' y=\'50\' text-anchor=\'middle\' fill=\'%23668855\' font-size=\'12\'%3E📷 戏%3C/text%3E%3C/svg%3E';"></div>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; width: 100%; align-items: center;">
+                        <div class="word-info"><div class="word-chinese">游戏</div><div class="word-pinyin">yóuxì</div><div class="word-meaning">juego</div></div>
+                        <button class="audio-btn" data-word="游戏">🔊 发音</button>
+                    </div>
+                </div>
+                <!-- 作业 -->
+                <div class="vocab-item">
+                    <div class="image-pair">
+                        <div class="word-image-placeholder"><img src="https://static.zuciku.com/images/bihu/zck/u3tsf0.gif" alt="作笔顺" style="max-width:100%; max-height:120px; border-radius:0.5rem;" onerror="this.onerror=null; this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'%3E%3Crect width=\'100\' height=\'100\' fill=\'%23f0f4ea\'/%3E%3Ctext x=\'50\' y=\'50\' text-anchor=\'middle\' fill=\'%23668855\' font-size=\'12\'%3E📷 作%3C/text%3E%3C/svg%3E';"></div>
+                        <div class="word-image-placeholder"><img src="https://static.zuciku.com/images/bihu/zck/f39oso.gif" alt="业笔顺" style="max-width:100%; max-height:120px; border-radius:0.5rem;" onerror="this.onerror=null; this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'%3E%3Crect width=\'100\' height=\'100\' fill=\'%23f0f4ea\'/%3E%3Ctext x=\'50\' y=\'50\' text-anchor=\'middle\' fill=\'%23668855\' font-size=\'12\'%3E📷 业%3C/text%3E%3C/svg%3E';"></div>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; width: 100%; align-items: center;">
+                        <div class="word-info"><div class="word-chinese">作业</div><div class="word-pinyin">zuòyè</div><div class="word-meaning">tarea</div></div>
+                        <button class="audio-btn" data-word="作业">🔊 发音</button>
+                    </div>
+                </div>
+                <!-- 着急 -->
+                <div class="vocab-item">
+                    <div class="image-pair">
+                        <div class="word-image-placeholder"><img src="https://static.zuciku.com/images/bihu/zck/7jd9f1.gif" alt="着笔顺" style="max-width:100%; max-height:120px; border-radius:0.5rem;" onerror="this.onerror=null; this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'%3E%3Crect width=\'100\' height=\'100\' fill=\'%23f0f4ea\'/%3E%3Ctext x=\'50\' y=\'50\' text-anchor=\'middle\' fill=\'%23668855\' font-size=\'12\'%3E📷 着%3C/text%3E%3C/svg%3E';"></div>
+                        <div class="word-image-placeholder"><img src="https://static.zuciku.com/images/bihu/zck/8lkz0r.gif" alt="急笔顺" style="max-width:100%; max-height:120px; border-radius:0.5rem;" onerror="this.onerror=null; this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'%3E%3Crect width=\'100\' height=\'100\' fill=\'%23f0f4ea\'/%3E%3Ctext x=\'50\' y=\'50\' text-anchor=\'middle\' fill=\'%23668855\' font-size=\'12\'%3E📷 急%3C/text%3E%3C/svg%3E';"></div>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; width: 100%; align-items: center;">
+                        <div class="word-info"><div class="word-chinese">着急</div><div class="word-pinyin">zhāojí</div><div class="word-meaning">preocuparse</div></div>
+                        <button class="audio-btn" data-word="着急">🔊 发音</button>
+                    </div>
+                </div>
+                <!-- 复习 -->
+                <div class="vocab-item">
+                    <div class="image-pair">
+                        <div class="word-image-placeholder"><img src="https://static.zuciku.com/images/bihu/zck/7ug11f.gif" alt="复笔顺" style="max-width:100%; max-height:120px; border-radius:0.5rem;" onerror="this.onerror=null; this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'%3E%3Crect width=\'100\' height=\'100\' fill=\'%23f0f4ea\'/%3E%3Ctext x=\'50\' y=\'50\' text-anchor=\'middle\' fill=\'%23668855\' font-size=\'12\'%3E📷 复%3C/text%3E%3C/svg%3E';"></div>
+                        <div class="word-image-placeholder"><img src="https://static.zuciku.com/images/bihu/zck/1gz3j0.gif" alt="习笔顺" style="max-width:100%; max-height:120px; border-radius:0.5rem;" onerror="this.onerror=null; this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'%3E%3Crect width=\'100\' height=\'100\' fill=\'%23f0f4ea\'/%3E%3Ctext x=\'50\' y=\'50\' text-anchor=\'middle\' fill=\'%23668855\' font-size=\'12\'%3E📷 习%3C/text%3E%3C/svg%3E';"></div>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; width: 100%; align-items: center;">
+                        <div class="word-info"><div class="word-chinese">复习</div><div class="word-pinyin">fùxí</div><div class="word-meaning">repasar</div></div>
+                        <button class="audio-btn" data-word="复习">🔊 发音</button>
+                    </div>
+                </div>
+                <!-- 南方 -->
+                <div class="vocab-item">
+                    <div class="image-pair">
+                        <div class="word-image-placeholder"><img src="https://static.zuciku.com/images/bihu/zck/j9d0el.gif" alt="南笔顺" style="max-width:100%; max-height:120px; border-radius:0.5rem;" onerror="this.onerror=null; this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'%3E%3Crect width=\'100\' height=\'100\' fill=\'%23f0f4ea\'/%3E%3Ctext x=\'50\' y=\'50\' text-anchor=\'middle\' fill=\'%23668855\' font-size=\'12\'%3E📷 南%3C/text%3E%3C/svg%3E';"></div>
+                        <div class="word-image-placeholder"><img src="https://static.zuciku.com/images/bihu/zck/j35b0y.gif" alt="方笔顺" style="max-width:100%; max-height:120px; border-radius:0.5rem;" onerror="this.onerror=null; this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'%3E%3Crect width=\'100\' height=\'100\' fill=\'%23f0f4ea\'/%3E%3Ctext x=\'50\' y=\'50\' text-anchor=\'middle\' fill=\'%23668855\' font-size=\'12\'%3E📷 方%3C/text%3E%3C/svg%3E';"></div>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; width: 100%; align-items: center;">
+                        <div class="word-info"><div class="word-chinese">南方</div><div class="word-pinyin">nánfāng</div><div class="word-meaning">sur</div></div>
+                        <button class="audio-btn" data-word="南方">🔊 发音</button>
+                    </div>
+                </div>
+                <!-- 北方 -->
+                <div class="vocab-item">
+                    <div class="image-pair">
+                        <div class="word-image-placeholder"><img src="https://static.zuciku.com/images/bihu/zck/swzifi.gif" alt="北笔顺" style="max-width:100%; max-height:120px; border-radius:0.5rem;" onerror="this.onerror=null; this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'%3E%3Crect width=\'100\' height=\'100\' fill=\'%23f0f4ea\'/%3E%3Ctext x=\'50\' y=\'50\' text-anchor=\'middle\' fill=\'%23668855\' font-size=\'12\'%3E📷 北%3C/text%3E%3C/svg%3E';"></div>
+                        <div class="word-image-placeholder"><img src="https://static.zuciku.com/images/bihu/zck/j35b0y.gif" alt="方笔顺" style="max-width:100%; max-height:120px; border-radius:0.5rem;" onerror="this.onerror=null; this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'%3E%3Crect width=\'100\' height=\'100\' fill=\'%23f0f4ea\'/%3E%3Ctext x=\'50\' y=\'50\' text-anchor=\'middle\' fill=\'%23668855\' font-size=\'12\'%3E📷 方%3C/text%3E%3C/svg%3E';"></div>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; width: 100%; align-items: center;">
+                        <div class="word-info"><div class="word-chinese">北方</div><div class="word-pinyin">běifāng</div><div class="word-meaning">norte</div></div>
+                        <button class="audio-btn" data-word="北方">🔊 发音</button>
+                    </div>
+                </div>
+                <!-- 面包 -->
+                <div class="vocab-item">
+                    <div class="image-pair">
+                        <div class="word-image-placeholder"><img src="https://f.hanchacha.com/bishun/gif/mian4-q5ikhsxtix1.gif" alt="面包笔顺1" style="max-width:100%; max-height:120px; border-radius:0.5rem;" onerror="this.onerror=null; this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'%3E%3Crect width=\'100\' height=\'100\' fill=\'%23f0f4ea\'/%3E%3Ctext x=\'50\' y=\'50\' text-anchor=\'middle\' fill=\'%23668855\' font-size=\'12\'%3E📷 包%3C/text%3E%3C/svg%3E';"></div>
+                        <div class="word-image-placeholder"><img src="https://static.zuciku.com/images/bihu/zck/2cbmss.gif" alt="面包笔顺2" style="max-width:100%; max-height:120px; border-radius:0.5rem;" onerror="this.onerror=null; this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'%3E%3Crect width=\'100\' height=\'100\' fill=\'%23f0f4ea\'/%3E%3Ctext x=\'50\' y=\'50\' text-anchor=\'middle\' fill=\'%23668855\' font-size=\'12\'%3E📷 面%3C/text%3E%3C/svg%3E';"></div>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; width: 100%; align-items: center;">
+                        <div class="word-info"><div class="word-chinese">面包</div><div class="word-pinyin">miànbāo</div><div class="word-meaning">pan</div></div>
+                        <button class="audio-btn" data-word="面包">🔊 发音</button>
+                    </div>
+                </div>
+                <!-- 带 -->
+                <div class="vocab-item">
+                    <div class="single-image"><img src="https://static.zuciku.com/images/bihu/zck/zjksea.gif" alt="带笔顺" style="max-width:100%; max-height:120px; border-radius:0.5rem;" onerror="this.onerror=null; this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'%3E%3Crect width=\'100\' height=\'100\' fill=\'%23f0f4ea\'/%3E%3Ctext x=\'50\' y=\'50\' text-anchor=\'middle\' fill=\'%23668855\' font-size=\'12\'%3E📷 带%3C/text%3E%3C/svg%3E';"></div>
+                    <div style="display: flex; justify-content: space-between; width: 100%; align-items: center;">
+                        <div class="word-info"><div class="word-chinese">带</div><div class="word-pinyin">dài</div><div class="word-meaning">llevar</div></div>
+                        <button class="audio-btn" data-word="带">🔊 发音</button>
+                    </div>
+                </div>
+                <!-- 地图 -->
+                <div class="vocab-item">
+                    <div class="image-pair">
+                        <div class="word-image-placeholder"><img src="https://static.zuciku.com/images/bihu/zck/uiasvj.gif" alt="地笔顺" style="max-width:100%; max-height:120px; border-radius:0.5rem;" onerror="this.onerror=null; this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'%3E%3Crect width=\'100\' height=\'100\' fill=\'%23f0f4ea\'/%3E%3Ctext x=\'50\' y=\'50\' text-anchor=\'middle\' fill=\'%23668855\' font-size=\'12\'%3E📷 地%3C/text%3E%3C/svg%3E';"></div>
+                        <div class="word-image-placeholder"><img src="https://static.zuciku.com/images/bihu/zck/18l87v.gif" alt="图笔顺" style="max-width:100%; max-height:120px; border-radius:0.5rem;" onerror="this.onerror=null; this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'%3E%3Crect width=\'100\' height=\'100\' fill=\'%23f0f4ea\'/%3E%3Ctext x=\'50\' y=\'50\' text-anchor=\'middle\' fill=\'%23668855\' font-size=\'12\'%3E📷 图%3C/text%3E%3C/svg%3E';"></div>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; width: 100%; align-items: center;">
+                        <div class="word-info"><div class="word-chinese">地图</div><div class="word-pinyin">dìtú</div><div class="word-meaning">mapa</div></div>
+                        <button class="audio-btn" data-word="地图">🔊 发音</button>
+                    </div>
+                </div>
+                <!-- 搬 -->
+                <div class="vocab-item">
+                    <div class="single-image"><img src="https://static.zuciku.com/images/bihu/zck/gktbur.gif" alt="搬笔顺" style="max-width:100%; max-height:120px; border-radius:0.5rem;" onerror="this.onerror=null; this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'%3E%3Crect width=\'100\' height=\'100\' fill=\'%23f0f4ea\'/%3E%3Ctext x=\'50\' y=\'50\' text-anchor=\'middle\' fill=\'%23668855\' font-size=\'12\'%3E📷 搬%3C/text%3E%3C/svg%3E';"></div>
+                    <div style="display: flex; justify-content: space-between; width: 100%; align-items: center;">
+                        <div class="word-info"><div class="word-chinese">搬</div><div class="word-pinyin">bān</div><div class="word-meaning">mudar</div></div>
+                        <button class="audio-btn" data-word="搬">🔊 发音</button>
+                    </div>
+                </div>
+            </div>
+            <p style="margin-top: 1rem; font-size: 0.85rem; color: #7f8c6d;">🎧 点击单词右侧喇叭，听标准发音</p>
+            <div style="margin-top: 1.5rem; text-align: center;">
+                <img class="scene-img" src="https://picsum.photos/id/20/550/350" alt="核心词汇配图" style="max-width:100%; border-radius:1rem;" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 500 300\'%3E%3Crect width=\'500\' height=\'300\' fill=\'%23f0f4ea\'/%3E%3Ctext x=\'250\' y=\'150\' text-anchor=\'middle\' fill=\'%23668855\' font-size=\'18\'%3E📖 核心词汇情景插图%3C/text%3E%3C/svg%3E';">
+                <p style="font-size:0.8rem; color:#8f9b82; margin-top:0.3rem;">📸 核心词汇情景插图</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 页面3：情景视频 -->
+    <div id="page-media" class="page">
+        <div class="card">
+            <div class="section-title">🎥 情景视频 · 场景对话模拟</div>
+            <div class="video-card"><div class="video-title">📌 一、谈周末打算</div><div class="video-wrapper"><iframe src="https://player.bilibili.com/player.html?isOutside=true&aid=116418813172258&bvid=BV1kkdzBpEYR&cid=37576704876&p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe></div><p style="font-size:0.85rem; color:#8f9b82; text-align:center;">🎬 周末邀约：吃饭、看电影、喝咖啡</p></div>
+            <div class="video-card"><div class="video-title">📌 二、在家</div><div class="video-wrapper"><iframe src="https://player.bilibili.com/player.html?isOutside=true&aid=116418813237052&bvid=BV1AkdzBWEsi&cid=37576705756&p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe></div><p style="font-size:0.85rem; color:#8f9b82; text-align:center;">🎬 母子对话：作业与游戏</p></div>
+            <div class="video-card"><div class="video-title">📌 三、聊旅游计划</div><div class="video-wrapper"><iframe src="https://player.bilibili.com/player.html?isOutside=true&aid=116418813106772&bvid=BV1pkdzBpEAu&cid=37576706094&p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe></div><p style="font-size:0.85rem; color:#8f9b82; text-align:center;">🎬 旅行计划：南方还是北方？</p></div>
+            <p style="margin-top: 0.5rem; font-size:0.85rem; background:#f4f0e3; padding:0.5rem; border-radius:1rem; text-align:center;">💡 提示：如果视频无声，请点击播放器右下角“小喇叭”图标手动取消静音。</p>
+        </div>
+    </div>
+
+    <!-- 页面4：语法知识 -->
+    <div id="page-grammar" class="page">
+        <div class="card">
+            <div class="section-title">📚 语法知识 · Gramática</div>
+            <div class="grammar-card">
+                <div class="grammar-title">1️⃣ 结果补语 “好” · El complemento de resultado “hǎo”</div>
+                <p>结果补语“好”用在动词的后边，如“吃好”“准备好”，表示动作完成，并让人满意。</p>
+                <div class="grammar-example">💡 “我吃完了”只表示动作完成；“我吃好了”表示不但“吃完了”，而且“吃得很满意”。</div>
+                <p><strong>例句：</strong></p>
+                <ul style="margin-left: 1.5rem; margin-top: 0.5rem;"><li>(1) 今晚的电影小刚已经买<strong>好</strong>票了。</li><li>(2) 饭还没做<strong>好</strong>，请你等一会儿。</li><li>(3) 去旅游的东西准备<strong>好</strong>了吗？</li><li>(4) 我还没想<strong>好</strong>要不要跟你走呢。</li></ul>
+                <div class="grammar-note">📌 注意：“好”强调结果令人满意或准备完成。</div>
+            </div>
+            <div class="grammar-card">
+                <div class="grammar-title">2️⃣ “一……也/都+不/没……” · La estructura negativa completa</div>
+                <p>用“一 + 量词 + 名词 + 也/都 + 不/没 + V”表示完全否定。</p>
+                <ul style="margin-left: 1.5rem; margin-top: 0.5rem;"><li>(1) 我<strong>一个苹果也不想吃</strong>。</li><li>(2) 昨天他<strong>一件衣服都没买</strong>。</li><li>(3) 小丽<strong>一杯茶也没喝</strong>。</li><li>(4) 手机、电脑、地图，<strong>一个也不能少</strong>。</li></ul>
+                <p><strong>用“一点儿”表示：</strong></p>
+                <ul style="margin-left: 1.5rem;"><li>(1) 我<strong>一点儿东西也不想吃</strong>。</li><li>(2) 这个星期我很忙，<strong>一点儿时间也没有</strong>。</li><li>(3) 今天早上我<strong>一点儿咖啡都没喝</strong>。</li><li>(4) 我<strong>一点儿钱都没带</strong>，所以不能买东西。</li></ul>
+                <p><strong>形容词用法：</strong></p>
+                <ul style="margin-left: 1.5rem;"><li>(1) 他<strong>一点儿也不累</strong>。</li><li>(2) 南方<strong>一点儿都不冷</strong>。</li><li>(3) 那个地方<strong>一点儿也不远</strong>。</li><li>(4) 你怎么<strong>一点儿也不着急</strong>？</li></ul>
+            </div>
+            <div class="grammar-card">
+                <div class="grammar-title">3️⃣ 连词 “那” · La conjunción “nà”</div>
+                <p>“那”放在句首，表示依据上文的意思得出的结果。</p>
+                <ul style="margin-left: 1.5rem; margin-top: 0.5rem;"><li>(1) A: 我不想去看电影。 B: <strong>那</strong>我也不去了。</li><li>(2) A: 我早就复习好了。 B: <strong>那</strong>也不能一直玩儿啊。</li></ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- 页面5：课堂练习 -->
+    <div id="page-exercise" class="page">
+        <div class="card">
+            <div class="section-title">✍️ 课文理解与词汇练习</div>
+            <div class="quiz-area" id="quiz-container"></div>
+        </div>
+        <div class="card">
+            <div class="section-title">📝 语法练习 · Ejercicios de gramática</div>
+            <div class="grammar-practice" id="grammar-practice">
+                <div class="practice-item"><div class="practice-question">🎯 练习一：结果补语“好” - 完成句子</div><div>(1) 我不能跟你出去玩儿，明天的汉语课我还没______。</div><input type="text" class="practice-input" id="grammar1_1" placeholder="请输入答案"><button class="practice-btn" data-practice="1_1">检查答案</button><div class="practice-feedback" id="fb_1_1"></div><div style="margin-top:1rem;">(2) 我们打算去旅行，我已经______火车票了。</div><input type="text" class="practice-input" id="grammar1_2" placeholder="请输入答案"><button class="practice-btn" data-practice="1_2">检查答案</button><div class="practice-feedback" id="fb_1_2"></div><div style="margin-top:1rem;">(3) 快______衣服，我们准备出门了。</div><input type="text" class="practice-input" id="grammar1_3" placeholder="请输入答案"><button class="practice-btn" data-practice="1_3">检查答案</button><div class="practice-feedback" id="fb_1_3"></div></div>
+                <div class="practice-item"><div class="practice-question">🎯 练习二：用“一……也/都+不/没……”完成句子</div><div>(1) 这些汉字太难了，我______。（不认识）</div><input type="text" class="practice-input" id="grammar2_1" placeholder="请输入答案"><button class="practice-btn" data-practice="2_1">检查答案</button><div class="practice-feedback" id="fb_2_1"></div><div style="margin-top:1rem;">(2) 这件衣服真便宜，______。（不贵）</div><input type="text" class="practice-input" id="grammar2_2" placeholder="请输入答案"><button class="practice-btn" data-practice="2_2">检查答案</button><div class="practice-feedback" id="fb_2_2"></div><div style="margin-top:1rem;">(3) 我没带钱，______。（没买）</div><input type="text" class="practice-input" id="grammar2_3" placeholder="请输入答案"><button class="practice-btn" data-practice="2_3">检查答案</button><div class="practice-feedback" id="fb_2_3"></div></div>
+                <div class="practice-item"><div class="practice-question">🎯 练习三：连词“那” - 完成对话</div><div>(1) A: 周末我不想去商店买东西。<br>B: ______。</div><input type="text" class="practice-input" id="grammar3_1" placeholder="请输入答案"><button class="practice-btn" data-practice="3_1">检查答案</button><div class="practice-feedback" id="fb_3_1"></div><div style="margin-top:1rem;">(2) A: 外边下大雨了，不能去踢球了。<br>B: ______。</div><input type="text" class="practice-input" id="grammar3_2" placeholder="请输入答案"><button class="practice-btn" data-practice="3_2">检查答案</button><div class="practice-feedback" id="fb_3_2"></div><div style="margin-top:1rem;">(3) A: 对不起，红色的手机已经卖完了。<br>B: ______。</div><input type="text" class="practice-input" id="grammar3_3" placeholder="请输入答案"><button class="practice-btn" data-practice="3_3">检查答案</button><div class="practice-feedback" id="fb_3_3"></div></div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="section-title" style="font-size:1.2rem;">📝 口语表达 · 用“打算”和“一直”造句</div>
+            <p><strong>根据课文，用“打算”或“一直”说说你的周末计划：</strong></p>
+            <textarea id="speechInput" rows="2" style="width:100%; border-radius:1rem; border:1px solid #cfdec4; padding:0.8rem; margin-top:0.5rem;" placeholder="例如：我打算周六上午复习功课，下午跟朋友喝咖啡。"></textarea>
+            <button id="speakPlanBtn" style="margin-top:0.8rem; background:#f4b942; padding:0.4rem 1rem; border-radius:2rem; cursor:pointer;">🎤 朗读我的句子</button>
+        </div>
+    </div>
+
+    <!-- 页面6：闯关挑战（贪吃蛇游戏）-->
+    <div id="page-challenge" class="page">
+        <div class="card">
+            <div class="section-title">🐍 闯关挑战 · 生词贪吃蛇</div>
+            <div class="snake-game-embed" id="snakeGameRoot"></div>
+        </div>
+    </div>
+
+    <!-- 页面7：学习资源 -->
+    <div id="page-resources" class="page">
+        <div class="card">
+            <div class="section-title">🌐 学习资源 · Recursos de aprendizaje</div>
+            <p style="margin-bottom: 1rem;">推荐以下网站，帮助你课后继续学习汉语：</p>
+            <div class="resources-grid" id="resources-list">
+                <!-- 第一栏：正确的汉字笔顺查询网站 -->
+                <a href="https://hanzi.aimcx.com/bishun-3453.html" target="_blank" class="resource-card" rel="noopener noreferrer">
+                    <div class="resource-icon">✍️</div>
+                    <div class="resource-info"><h3>汉字笔顺查询</h3><p>在线查询汉字笔顺、笔画、田字格书写</p></div>
+                </a>
+                <a href="https://www.chinesecio.com/" target="_blank" class="resource-card" rel="noopener noreferrer">
+                    <div class="resource-icon">🌏</div>
+                    <div class="resource-info"><h3>孔子学院总部</h3><p>全球汉语学习资源与考试信息</p></div>
+                </a>
+                <a href="https://resources.allsetlearning.com/chinese/grammar/" target="_blank" class="resource-card" rel="noopener noreferrer">
+                    <div class="resource-icon">📚</div>
+                    <div class="resource-info"><h3>AllSet Learning 语法</h3><p>中文语法点详解与练习</p></div>
+                </a>
+                <a href="https://www.purpleculture.net/" target="_blank" class="resource-card" rel="noopener noreferrer">
+                    <div class="resource-icon">📖</div>
+                    <div class="resource-info"><h3>Purple Culture</h3><p>中文学习工具与阅读材料</p></div>
+                </a>
+                <a href="https://www.pleco.com/" target="_blank" class="resource-card" rel="noopener noreferrer">
+                    <div class="resource-icon">📱</div>
+                    <div class="resource-info"><h3>Pleco 词典</h3><p>强大的中文字典与学习App</p></div>
+                </a>
+                <a href="https://chinesepod.com/" target="_blank" class="resource-card" rel="noopener noreferrer">
+                    <div class="resource-icon">🎧</div>
+                    <div class="resource-info"><h3>ChinesePod</h3><p>汉语播客与情景对话</p></div>
+                </a>
+                <a href="https://www.duolingo.com/zh" target="_blank" class="resource-card" rel="noopener noreferrer">
+                    <div class="resource-icon">🦉</div>
+                    <div class="resource-info"><h3>Duolingo 多邻国</h3><p>游戏化语言学习平台</p></div>
+                </a>
+            </div>
+            <p style="margin-top: 1rem; font-size: 0.85rem; color: #8f9b82;">💡 提示：点击卡片可打开外部学习网站，建议在课后自主探索。</p>
+        </div>
+    </div>
+    <footer>© 汉语课堂 · 第一课《周末你有什么打算》| 包含课文对话、核心词汇（笔顺图片）、情景视频、语法知识、课堂练习、闯关挑战及学习资源</footer>
+</div>
+
+<script>
+    // 原有的生词数据与功能
+    const vocabData = [
+        { chn: "周末", pinyin: "zhōumò", es: "fin de semana", audioText: "周末" },
+        { chn: "打算", pinyin: "dǎsuàn", es: "planear / tener intención", audioText: "打算" },
+        { chn: "啊", pinyin: "a", es: "partícula enfática", audioText: "啊" },
+        { chn: "跟", pinyin: "gēn", es: "con / seguir", audioText: "跟" },
+        { chn: "一直", pinyin: "yīzhí", es: "siempre / continuamente", audioText: "一直" },
+        { chn: "游戏", pinyin: "yóuxì", es: "juego", audioText: "游戏" },
+        { chn: "作业", pinyin: "zuòyè", es: "tarea", audioText: "作业" },
+        { chn: "着急", pinyin: "zhāojí", es: "preocuparse / apurarse", audioText: "着急" },
+        { chn: "复习", pinyin: "fùxí", es: "repasar", audioText: "复习" },
+        { chn: "南方", pinyin: "nánfāng", es: "sur", audioText: "南方" },
+        { chn: "北方", pinyin: "běifāng", es: "norte", audioText: "北方" },
+        { chn: "面包", pinyin: "miànbāo", es: "pan", audioText: "面包" },
+        { chn: "带", pinyin: "dài", es: "llevar / traer", audioText: "带" },
+        { chn: "地图", pinyin: "dìtú", es: "mapa", audioText: "地图" },
+        { chn: "搬", pinyin: "bān", es: "mudar / mover", audioText: "搬" }
+    ];
+    // 构建词汇网格（核心词汇页面的动态生词网格）
+    function buildVocab() { /* 此函数已在页面静态实现，此处保留空函数避免报错 */ }
+    
+    // 发音按钮绑定
+    function bindAudioButtons() {
+        document.querySelectorAll('.audio-btn').forEach(btn => {
+            btn.removeEventListener('click', btn._listener);
+            const listener = () => {
+                const word = btn.getAttribute('data-word');
+                if (window.speechSynthesis) {
+                    window.speechSynthesis.cancel();
+                    const utterance = new SpeechSynthesisUtterance(word);
+                    utterance.lang = 'zh-CN';
+                    utterance.rate = 0.8;
+                    window.speechSynthesis.speak(utterance);
+                } else alert("不支持语音合成");
+            };
+            btn.addEventListener('click', listener);
+            btn._listener = listener;
+        });
+    }
+
+    // 对话朗读按钮绑定
+    function bindDialogAudioButtons() {
+        document.querySelectorAll('.dialog-audio-btn').forEach(btn => {
+            btn.removeEventListener('click', btn._listener);
+            const listener = (e) => {
+                e.stopPropagation();
+                const text = btn.getAttribute('data-text');
+                if (text && window.speechSynthesis) {
+                    window.speechSynthesis.cancel();
+                    const u = new SpeechSynthesisUtterance(text);
+                    u.lang = 'zh-CN';
+                    u.rate = 0.85;
+                    window.speechSynthesis.speak(u);
+                }
+            };
+            btn.addEventListener('click', listener);
+            btn._listener = listener;
+        });
+    }
+
+    // 模式切换
+    function initModeSwitching() {
+        const modeBtns = document.querySelectorAll('.mode-btn');
+        const chSpans = document.querySelectorAll('#page-dialog .text-ch');
+        const pySpans = document.querySelectorAll('#page-dialog .text-py');
+        function setMode(mode) {
+            if (mode === 'all') {
+                chSpans.forEach(s => s.style.display = 'block');
+                pySpans.forEach(s => s.style.display = 'block');
+            } else if (mode === 'chinese') {
+                chSpans.forEach(s => s.style.display = 'block');
+                pySpans.forEach(s => s.style.display = 'none');
+            } else if (mode === 'pinyin') {
+                chSpans.forEach(s => s.style.display = 'none');
+                pySpans.forEach(s => s.style.display = 'block');
+            } else if (mode === 'hidden') {
+                chSpans.forEach(s => s.style.display = 'none');
+                pySpans.forEach(s => s.style.display = 'none');
+            }
+            modeBtns.forEach(btn => {
+                if (btn.dataset.mode === mode) btn.classList.add('active-mode');
+                else btn.classList.remove('active-mode');
+            });
+        }
+        modeBtns.forEach(btn => btn.addEventListener('click', () => setMode(btn.dataset.mode)));
+        setMode('all');
+    }
+
+    // 课文理解测验
+    function buildQuiz() {
+        const qc = document.getElementById('quiz-container');
+        if (!qc) return;
+        const qs = [{ q: "1. 小刚想请小丽做什么？", op: ["吃饭看电影咖啡", "打游戏", "去旅行", "复习"], cor: 0 }, { q: "2. 妈妈为什么说儿子一直玩游戏？", op: ["作业没写完", "明天考试不着急", "复习好了", "想出去玩"], cor: 1 }, { q: "3. 小丽觉得哪儿最好玩儿？", op: ["北方", "南方", "家里", "图书馆"], cor: 1 }, { q: "4. 小刚说已经准备好了什么？", op: ["手机电脑", "水果面包茶", "地图衣服", "游戏机"], cor: 1 }, { q: "5. “不是搬家”意思是？", op: ["多带东西", "少带东西", "带家具", "不带衣服"], cor: 1 }];
+        let html = '';
+        qs.forEach((q, idx) => {
+            html += `<div class="quiz-question">${q.q}</div><div class="quiz-options" data-qidx="${idx}">`;
+            q.op.forEach((opt, oidx) => { html += `<div class="quiz-option" data-optidx="${oidx}" data-correct="${q.cor}">${opt}</div>`; });
+            html += `</div><div class="quiz-feedback" id="fb-${idx}"></div>`;
+        });
+        qc.innerHTML = html;
+        document.querySelectorAll('.quiz-option').forEach(opt => opt.addEventListener('click', () => {
+            const p = opt.parentElement;
+            const qIdx = p.dataset.qidx;
+            const selected = parseInt(opt.dataset.optidx);
+            const correct = parseInt(opt.dataset.correct);
+            const fb = document.getElementById(`fb-${qIdx}`);
+            fb.innerHTML = (selected === correct) ? '✅ 正确！' : '❌ 再试试';
+            fb.style.color = (selected === correct) ? '#2c6e2f' : '#c24a2c';
+        }));
+    }
+
+    // 语法练习检查
+    function initGrammarPractice() {
+        const answers = { '1_1': ['准备好', '复习好', '预习好'], '1_2': ['买好', '订好'], '1_3': ['穿好', '换好'], '2_1': ['一个也不认识', '一个都不认识'], '2_2': ['一点儿也不贵', '一点都不贵'], '2_3': ['一件也没买', '一个也没买'], '3_1': ['那我也不去了', '那我也不想去'], '3_2': ['那我们就不去了', '那就不踢了'], '3_3': ['那我买别的颜色吧', '那我再看看别的'] };
+        document.querySelectorAll('.practice-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const practiceId = btn.getAttribute('data-practice');
+                const inputElem = document.getElementById(`grammar${practiceId}`);
+                const fbElem = document.getElementById(`fb_${practiceId}`);
+                const userAnswer = inputElem.value.trim();
+                const possibleAnswers = answers[practiceId] || [];
+                let isCorrect = false;
+                for (let ans of possibleAnswers) { if (userAnswer === ans || userAnswer.includes(ans)) { isCorrect = true; break; } }
+                if (isCorrect) { fbElem.innerHTML = '✅ 回答正确！很好！'; fbElem.style.color = '#2c6e2f'; }
+                else { fbElem.innerHTML = `❌ 再试试看！参考答案：${possibleAnswers[0]}`; fbElem.style.color = '#c24a2c'; }
+            });
+        });
+    }
+
+    // 导航切换
+    function setupTabs() {
+        const btns = document.querySelectorAll('.tab-btn');
+        const pages = document.querySelectorAll('.page');
+        btns.forEach(btn => btn.addEventListener('click', () => {
+            const id = btn.dataset.page;
+            btns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            pages.forEach(p => p.classList.remove('active-page'));
+            document.getElementById(id).classList.add('active-page');
+            bindDialogAudioButtons();
+            if (id === 'page-dialog') {
+                const active = document.querySelector('.mode-btn.active-mode');
+                if (active) {
+                    const mode = active.dataset.mode;
+                    const ch = document.querySelectorAll('#page-dialog .text-ch');
+                    const py = document.querySelectorAll('#page-dialog .text-py');
+                    if (mode === 'all') { ch.forEach(s => s.style.display = 'block'); py.forEach(s => s.style.display = 'block'); }
+                    else if (mode === 'chinese') { ch.forEach(s => s.style.display = 'block'); py.forEach(s => s.style.display = 'none'); }
+                    else if (mode === 'pinyin') { ch.forEach(s => s.style.display = 'none'); py.forEach(s => s.style.display = 'block'); }
+                    else if (mode === 'hidden') { ch.forEach(s => s.style.display = 'none'); py.forEach(s => s.style.display = 'none'); }
+                }
+            }
+        }));
+    }
+
+    function playSelectedSentences() { const s = ["周末你有什么打算", "我早就想好了，请你吃饭、看电影", "你一直玩儿电脑游戏，作业写完了吗", "我早就复习好了", "下个月我去旅游，你能跟我一起去吗", "南方啊，北方好一些，不冷也不热", "水果、面包、茶都准备好了", "我们是去旅游，不是搬家，还是少带一些吧"]; let i = 0; function next() { if (i >= s.length) return; const u = new SpeechSynthesisUtterance(s[i]); u.lang = 'zh-CN'; u.rate = 0.8; u.onend = () => { i++; next(); }; window.speechSynthesis.speak(u); } window.speechSynthesis.cancel(); next(); }
+    function speakCustomPlan() { const t = document.getElementById('speechInput')?.value.trim(); if (!t) { alert("请先造句"); return; } const u = new SpeechSynthesisUtterance(t); u.lang = 'zh-CN'; u.rate = 0.85; window.speechSynthesis.cancel(); window.speechSynthesis.speak(u); }
+
+    // 贪吃蛇游戏动态注入（完整版）
+    (function loadSnakeGame() {
+        const container = document.getElementById('snakeGameRoot');
+        if (!container) return;
+        const scriptElem = document.createElement('script');
+        scriptElem.textContent = `(function(){ const MASTER_VOCAB = ["周末","打算","啊","跟","一直","游戏","作业","着急","复习","南方","北方","面包","带","地图","搬"]; function getRandomWords(n){ const shuffled=[...MASTER_VOCAB]; for(let i=shuffled.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [shuffled[i],shuffled[j]]=[shuffled[j],shuffled[i]]; } return shuffled.slice(0,n); } function createTone(type,freq,dur,vol=0.2){ try{ const ctx=new (window.AudioContext||window.webkitAudioContext)(); const osc=ctx.createOscillator(); const gain=ctx.createGain(); osc.type=type; osc.frequency.value=freq; gain.gain.value=vol; osc.connect(gain); gain.connect(ctx.destination); osc.start(); osc.stop(ctx.currentTime+dur); ctx.resume(); }catch(e){} } function playCorrect(){ createTone('triangle',880,0.12,0.15); setTimeout(()=>createTone('triangle',1320,0.1,0.15),50); } function playFail(){ createTone('sawtooth',220,0.2,0.2); setTimeout(()=>createTone('sawtooth',165,0.2,0.2),80); } function speakWord(w){ if(window.speechSynthesis){ window.speechSynthesis.cancel(); const u=new SpeechSynthesisUtterance(w); u.lang='zh-CN'; u.rate=0.8; window.speechSynthesis.speak(u); } } let bgMusic=null, musicOn=true, bgInterval=null, isMusicPlaying=false; function startBgMusic(){ if(!musicOn || isMusicPlaying) return; try{ const ctx=new AudioContext(); const osc1=ctx.createOscillator(); const osc2=ctx.createOscillator(); const gain1=ctx.createGain(); const gain2=ctx.createGain(); osc1.type='triangle'; osc1.frequency.value=523; osc2.type='sine'; osc2.frequency.value=392; gain1.gain.value=0.1; gain2.gain.value=0.06; osc1.connect(gain1); osc2.connect(gain2); gain1.connect(ctx.destination); gain2.connect(ctx.destination); osc1.start(); osc2.start(); const melody=[523,523,784,784,880,880,784,659,659,587,587,523]; let idx=0; bgInterval=setInterval(()=>{ if(!musicOn || !isMusicPlaying) return; osc1.frequency.value=melody[idx%melody.length]; osc2.frequency.value=Math.floor(melody[idx%melody.length]*0.75); idx++; },400); bgMusic={ctx,osc1,osc2,gain1,gain2}; isMusicPlaying=true; }catch(e){} } function stopBgMusic(){ if(bgInterval) clearInterval(bgInterval); if(bgMusic){ try{ bgMusic.osc1.stop(); bgMusic.osc2.stop(); bgMusic.ctx.close(); }catch(e){} bgMusic=null; } isMusicPlaying=false; } function pauseBgMusic(){ if(bgInterval) clearInterval(bgInterval); if(bgMusic && bgMusic.gain1){ bgMusic.gain1.gain.value=0; bgMusic.gain2.gain.value=0; } isMusicPlaying=false; } function resumeBgMusic(){ if(!musicOn) return; if(!isMusicPlaying && bgMusic){ try{ const melody=[523,523,784,784,880,880,784,659,659,587,587,523]; let idx=0; bgInterval=setInterval(()=>{ if(!musicOn || !isMusicPlaying) return; if(bgMusic.osc1) bgMusic.osc1.frequency.value=melody[idx%melody.length]; if(bgMusic.osc2) bgMusic.osc2.frequency.value=Math.floor(melody[idx%melody.length]*0.75); idx++; },400); if(bgMusic.gain1) bgMusic.gain1.gain.value=0.1; if(bgMusic.gain2) bgMusic.gain2.gain.value=0.06; isMusicPlaying=true; }catch(e){} } else { startBgMusic(); } } function toggleMusic(){ musicOn=!musicOn; const btn=document.getElementById('musicToggleSnake'); if(btn) btn.innerText=musicOn?'🎵 音乐':'🔇 静音'; if(musicOn){ if(!paused) resumeBgMusic(); else { startBgMusic(); pauseBgMusic(); } } else { pauseBgMusic(); } } let canvas,ctx,gridSize=25,cols=32,rows=20,snake=[{x:10,y:10},{x:9,y:10},{x:8,y:10},{x:7,y:10}],direction={dx:1,dy:0},nextDir={dx:1,dy:0},foods=[],score=0,gameActive=false,gameStarted=false,loop=null,moveInterval=200,paused=false,currentWords=[],targetWord="",targetScore=3; function updateUI(){ document.getElementById('snakeScore').innerText=\`\${score}/\${targetScore}\`; const gridDiv=document.getElementById('wordGridSnake'); if(gridDiv) gridDiv.innerHTML=currentWords.map(w=>\`<div class="word-tile-snake">\${w}</div>\`).join(''); } function genFoods(){ const newFoods=[]; const wordsCopy=[...currentWords]; for(let i=wordsCopy.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [wordsCopy[i],wordsCopy[j]]=[wordsCopy[j],wordsCopy[i]]; } for(let w of wordsCopy){ let placed=false,att=0; while(!placed && att<300){ const x=Math.floor(Math.random()*(cols-4))+2; const y=Math.floor(Math.random()*(rows-4))+2; if(!snake.some(s=>s.x===x && s.y===y) && !newFoods.some(f=>f.x===x && f.y===y)){ newFoods.push({word:w,x,y,eaten:false}); placed=true; } att++; } if(!placed){ for(let y=2;y<rows-2;y++){ let found=false; for(let x=2;x<cols-2;x++){ if(!snake.some(s=>s.x===x && s.y===y) && !newFoods.some(f=>f.x===x && f.y===y)){ newFoods.push({word:w,x,y,eaten:false}); found=true; break; } } if(found) break; } } } return newFoods; } function draw(){ if(!ctx) return; ctx.clearRect(0,0,800,500); ctx.strokeStyle='#b3dff5'; for(let i=0;i<=cols;i++){ ctx.beginPath(); ctx.moveTo(i*gridSize,0); ctx.lineTo(i*gridSize,500); ctx.stroke(); } for(let i=0;i<=rows;i++){ ctx.beginPath(); ctx.moveTo(0,i*gridSize); ctx.lineTo(800,i*gridSize); ctx.stroke(); } foods.forEach(f=>{ if(f.eaten) return; const x=f.x*gridSize,y=f.y*gridSize; ctx.fillStyle='#fefcd0'; ctx.shadowBlur=4; ctx.beginPath(); ctx.roundRect(x+2,y+2,gridSize-4,gridSize-4,8); ctx.fill(); ctx.strokeStyle='#f57c42'; ctx.lineWidth=2; ctx.stroke(); ctx.fillStyle='#2d5f79'; ctx.font=\`bold \${Math.floor(gridSize*0.6)}px "Comic Sans MS"\`; ctx.textAlign='center'; ctx.textBaseline='middle'; ctx.fillText(f.word,x+gridSize/2,y+gridSize/2); }); ctx.shadowBlur=0; snake.forEach((seg,idx)=>{ const x=seg.x*gridSize,y=seg.y*gridSize; ctx.fillStyle='#ffb7c5'; ctx.beginPath(); ctx.roundRect(x+3,y+3,gridSize-6,gridSize-6,10); ctx.fill(); if(idx===0){ ctx.fillStyle='#2f4d5c'; ctx.beginPath(); ctx.arc(x+16,y+12,4,0,2*Math.PI); ctx.fill(); ctx.beginPath(); ctx.arc(x+32,y+12,4,0,2*Math.PI); ctx.fill(); } }); if(!gameStarted && !gameActive){ ctx.fillStyle='rgba(0,0,0,0.5)'; ctx.fillRect(0,0,800,500); ctx.fillStyle='white'; ctx.font='bold 28px "Comic Sans MS"'; ctx.textAlign='center'; ctx.fillText('🎤 点击「随机朗读」开始游戏',400,250); } else if(paused && gameActive){ ctx.fillStyle='rgba(200,233,252,0.7)'; ctx.fillRect(0,0,800,500); ctx.fillStyle='#215c77'; ctx.font='bold 48px "Comic Sans MS"'; ctx.textAlign='center'; ctx.fillText('⏸ 暂停中',400,250); } } function move(){ if(!gameActive||paused) return; direction={...nextDir}; const head=snake[0]; const newHead={x:head.x+direction.dx,y:head.y+direction.dy}; if(newHead.x<0||newHead.x>=cols||newHead.y<0||newHead.y>=rows){ gameOver("撞墙了"); return; } let foodIdx=-1; for(let i=0;i<foods.length;i++){ if(!foods[i].eaten && foods[i].x===newHead.x && foods[i].y===newHead.y){ foodIdx=i; break; } } let grow=false; if(foodIdx!==-1){ const eaten=foods[foodIdx]; if(eaten.word===targetWord){ playCorrect(); grow=true; foods[foodIdx].eaten=true; score++; updateUI(); if(score>=targetScore){ gameWin(); return; } const remain=foods.filter(f=>!f.eaten).map(f=>f.word); if(remain.length){ let newTarget=remain[Math.floor(Math.random()*remain.length)]; targetWord=newTarget; updateUI(); speakWord(targetWord); } }else{ playFail(); gameOver(\`吃错了！“\${eaten.word}”不是目标词\`); return; } } const selfCollide=snake.some((seg,idx)=>{ if(!grow && idx===snake.length-1) return false; return seg.x===newHead.x && seg.y===newHead.y; }); if(selfCollide){ gameOver("撞到自己了"); return; } snake.unshift(newHead); if(!grow) snake.pop(); draw(); } function gameOver(msg){ if(!gameActive) return; gameActive=false; gameStarted=false; if(loop) clearInterval(loop); pauseBgMusic(); alert(\`😢 \${msg}\\n再试一次吧\`); resetGame(); draw(); } function gameWin(){ if(!gameActive) return; gameActive=false; gameStarted=false; if(loop) clearInterval(loop); pauseBgMusic(); alert(\`🏆 闯关成功！汉语生词大师！\`); resetGame(); draw(); } function resetGame(){ if(loop) clearInterval(loop); currentWords=getRandomWords(10); targetWord=currentWords[Math.floor(Math.random()*currentWords.length)]; snake=[{x:10,y:10},{x:9,y:10},{x:8,y:10},{x:7,y:10}]; direction={dx:1,dy:0}; nextDir={dx:1,dy:0}; score=0; gameActive=false; gameStarted=false; paused=false; foods=genFoods(); updateUI(); draw(); if(musicOn && !isMusicPlaying) startBgMusic(); } function startGame(){ if(gameStarted) return; gameActive=true; gameStarted=true; paused=false; if(loop) clearInterval(loop); loop=setInterval(()=>move(),moveInterval); speakWord(targetWord); draw(); } function togglePause(){ if(!gameActive) return; paused=!paused; const btn=document.getElementById('pauseSnakeBtn'); if(btn) btn.innerText=paused?'▶️ 开始':'⏸️ 暂停'; if(paused){ if(musicOn) pauseBgMusic(); } else { if(musicOn) resumeBgMusic(); } draw(); } function randomSpeakAndStart(){ if(!gameStarted){ startGame(); } else if(gameActive){ const newTarget=currentWords[Math.floor(Math.random()*currentWords.length)]; targetWord=newTarget; updateUI(); speakWord(targetWord); } } window.addEventListener('load',()=>{ canvas=document.getElementById('snakeCanvasGame'); if(!canvas) return; ctx=canvas.getContext('2d'); canvas.width=800; canvas.height=500; gridSize=canvas.width/cols; resetGame(); document.getElementById('speakSnakeBtn')?.addEventListener('click',randomSpeakAndStart); document.getElementById('pauseSnakeBtn')?.addEventListener('click',togglePause); document.getElementById('restartSnakeBtn')?.addEventListener('click',()=>{ resetGame(); gameStarted=false; gameActive=false; draw(); }); document.getElementById('musicToggleSnake')?.addEventListener('click',toggleMusic); window.addEventListener('keydown',(e)=>{ if(!gameActive||paused) return; if(e.key==='ArrowUp' && direction.dy!==1) nextDir={dx:0,dy:-1}; else if(e.key==='ArrowDown' && direction.dy!==-1) nextDir={dx:0,dy:1}; else if(e.key==='ArrowLeft' && direction.dx!==1) nextDir={dx:-1,dy:0}; else if(e.key==='ArrowRight' && direction.dx!==-1) nextDir={dx:1,dy:0}; }); }); })();`;
+        container.innerHTML = `<div class="snake-header"><div class="snake-score" id="snakeScore">0/3</div><div class="snake-controls"><button class="snake-btn" id="speakSnakeBtn">🔊 随机朗读</button><button class="snake-btn" id="pauseSnakeBtn">⏸️ 暂停</button><button class="snake-btn" id="restartSnakeBtn">🔄 重来</button><button class="snake-btn" id="musicToggleSnake">🎵 音乐</button></div></div><div class="snake-canvas-box"><canvas id="snakeCanvasGame" width="800" height="500" style="width:100%; height:auto; background:#c8e9fc; border-radius:30px;"></canvas></div><div class="word-grid-snake" id="wordGridSnake"></div><div class="snake-hint">🎤 点击「随机朗读」开始游戏并听词 → 控制蛇吃掉正确的生词！每吃对一个得1分，累计3分过关！</div>`;
+        const style = document.createElement('style');
+        style.textContent = `canvas { cursor: pointer; } .word-grid-snake { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 15px; } .word-tile-snake { background: #fefcd0; border: 3px solid #ffb284; border-radius: 30px; padding: 8px 16px; font-size: 18px; font-weight: 600; color: #215c77; }`;
+        document.head.appendChild(style);
+        container.appendChild(scriptElem);
+        if (!CanvasRenderingContext2D.prototype.roundRect) {
+            CanvasRenderingContext2D.prototype.roundRect = function (x, y, w, h, r) {
+                if (w < 2 * r) r = w / 2;
+                if (h < 2 * r) r = h / 2;
+                this.moveTo(x + r, y);
+                this.lineTo(x + w - r, y);
+                this.quadraticCurveTo(x + w, y, x + w, y + r);
+                this.lineTo(x + w, y + h - r);
+                this.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+                this.lineTo(x + r, y + h);
+                this.quadraticCurveTo(x, y + h, x, y + h - r);
+                this.lineTo(x, y + r);
+                this.quadraticCurveTo(x, y, x + r, y);
+                return this;
+            };
+        }
+    })();
+
+    bindAudioButtons();
+    buildQuiz();
+    setupTabs();
+    initModeSwitching();
+    bindDialogAudioButtons();
+    initGrammarPractice();
+    document.getElementById('playFullDialogAudio')?.addEventListener('click', playSelectedSentences);
+    document.getElementById('speakPlanBtn')?.addEventListener('click', speakCustomPlan);
+</script>
+</body>
+</html>
